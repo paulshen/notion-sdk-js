@@ -1,5 +1,5 @@
-import type { Agent } from "http"
-import { URL } from "url"
+// import type { Agent } from "http"
+// import { URL } from "url"
 import {
   Logger,
   LogLevel,
@@ -45,11 +45,11 @@ import {
 } from "./api-endpoints"
 
 import got, {
-  Got,
   Options as GotOptions,
-  Headers as GotHeaders,
-  Agents as GotAgents,
-} from "got"
+  // Headers as GotHeaders,
+  // Agents as GotAgents,
+} from "ky"
+type GotHeaders = Record<string, string>;
 
 export interface ClientOptions {
   auth?: string
@@ -57,7 +57,7 @@ export interface ClientOptions {
   baseUrl?: string
   logLevel?: LogLevel
   logger?: Logger
-  agent?: Agent
+  // agent?: Agent
   notionVersion?: string
 }
 
@@ -73,7 +73,7 @@ export default class Client {
   #auth?: string
   #logLevel: LogLevel
   #logger: Logger
-  #got: Got
+  #got: typeof got
 
   static readonly defaultNotionVersion = "2021-05-13"
 
@@ -95,7 +95,7 @@ export default class Client {
         "user-agent": "notionhq-client/0.1.0",
       },
       retry: 0,
-      agent: makeAgentOption(prefixUrl, options?.agent),
+      // agent: makeAgentOption(prefixUrl, options?.agent),
     })
   }
 
@@ -145,7 +145,7 @@ export default class Client {
       if (HTTPResponseError.isHTTPResponseError(requestError)) {
         // The response body may contain sensitive information so it is logged separately at the DEBUG level
         this.log(LogLevel.DEBUG, `failed response body`, {
-          body: requestError.body,
+          // body: requestError.body,
         })
       }
 
@@ -380,26 +380,26 @@ type WithAuth<P> = P & { auth?: string }
  * Helper functions
  */
 
-function makeAgentOption(
-  prefixUrl: string,
-  agent: Agent | undefined
-): GotAgents | undefined {
-  if (agent === undefined) {
-    return undefined
-  }
-  return {
-    [selectProtocol(prefixUrl)]: agent,
-  }
-}
+// function makeAgentOption(
+//   prefixUrl: string,
+//   agent: Agent | undefined
+// ): GotAgents | undefined {
+//   if (agent === undefined) {
+//     return undefined
+//   }
+//   return {
+//     [selectProtocol(prefixUrl)]: agent,
+//   }
+// }
 
-function selectProtocol(prefixUrl: string): "http" | "https" {
-  const url = new URL(prefixUrl)
+// function selectProtocol(prefixUrl: string): "http" | "https" {
+//   const url = new URL(prefixUrl)
 
-  if (url.protocol === "https:") {
-    return "https"
-  } else if (url.protocol === "http:") {
-    return "http"
-  }
+//   if (url.protocol === "https:") {
+//     return "https"
+//   } else if (url.protocol === "http:") {
+//     return "http"
+//   }
 
-  throw new TypeError(`baseUrl option must begin with "https://" or "http://"`)
-}
+//   throw new TypeError(`baseUrl option must begin with "https://" or "http://"`)
+// }

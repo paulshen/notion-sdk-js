@@ -1,9 +1,9 @@
-import type { IncomingHttpHeaders } from "http"
+// import type { IncomingHttpHeaders } from "http"
 import type {
   HTTPError as GotHTTPError,
   TimeoutError as GotTimeoutError,
-  Response as GotResponse,
-} from "got"
+} from "ky"
+type GotResponse = Response
 import { isObject } from "./helpers"
 
 export class RequestTimeoutError extends Error {
@@ -27,18 +27,17 @@ export class RequestTimeoutError extends Error {
 export class HTTPResponseError extends Error {
   readonly code: string = "notionhq_client_response_error"
   readonly status: number
-  readonly headers: IncomingHttpHeaders
-  readonly body: string
+  readonly headers: Headers;
+  // readonly body: string
 
   constructor(response: GotResponse, message?: string) {
     super(
-      message ??
-        `Request to Notion API failed with status: ${response.statusCode}`
+      message ?? `Request to Notion API failed with status: ${response.status}`
     )
     this.name = "HTTPResponseError"
-    this.status = response.statusCode
+    this.status = response.status
     this.headers = response.headers
-    this.body = response.rawBody.toString()
+    // this.body = response.body;
   }
 
   static isHTTPResponseError(error: unknown): error is HTTPResponseError {

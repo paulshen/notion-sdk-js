@@ -36,7 +36,7 @@
     "build/src/**"
   ],
   "dependencies": {
-    "got": "^11.8.2"
+    "ky": "^0.28.5"
   },
   "devDependencies": {
     "@ava/typescript": "^2.0.0",
