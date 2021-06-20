@@ -48,7 +48,7 @@ import got, {
   Options as GotOptions,
   // Headers as GotHeaders,
   // Agents as GotAgents,
-} from "ky"
+} from "https://cdn.skypack.dev/ky"
 type GotHeaders = Record<string, string>;
 
 export interface ClientOptions {

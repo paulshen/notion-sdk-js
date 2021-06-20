@@ -2,7 +2,7 @@
 import type {
   HTTPError as GotHTTPError,
   TimeoutError as GotTimeoutError,
-} from "ky"
+} from "https://cdn.skypack.dev/ky"
 type GotResponse = Response
 import { isObject } from "./helpers"
 

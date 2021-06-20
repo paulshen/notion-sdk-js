@@ -5,8 +5,9 @@
 
     // Node LTS Fermium (14.x) has mostly complete support for ES2019 (as reported by https://node.green/)
     "target": "ES2019",
-    "module": "commonjs",
+    "module": "ES6",
     // "esModuleInterop": true,
+    "moduleResolution": "node",
 
     // Overrides default in order to remove "dom" because this package shouldn't assume the presence of browser APIs
     "lib": ["ES2019", "DOM"],
