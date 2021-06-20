@@ -11,7 +11,7 @@ function assertNever(_x) {
     throw new Error("Unexpected value. Should have been never.");
 }
 function pick(base, keys) {
-    const entries = keys.map(key => [key, base === null || base === void 0 ? void 0 : base[key]]);
+    const entries = keys.map(key => [key, base === null || base === void 0 ? void 0 : base[key]]).filter(([k, v]) => v !== undefined);
     return Object.fromEntries(entries);
 }
 function isObject(o) {
